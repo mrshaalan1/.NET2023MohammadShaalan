@@ -1,0 +1,41 @@
+@using Microsoft.AspNetCore.Identity
+@model List<AppUser>
+@inject UserManager<AppUser> _UserManager
+<h1 class="text-white">USERS</h1>
+
+@if (@Model != null)
+{
+    <table class="table text-white">
+        <tr>
+            <td class="fw-bold ">UserName</td>
+            <td class="fw-bold ">Email</td>
+            <td class="fw-bold ">Role</td>
+        </tr>
+        @foreach (var user in @Model)
+        {
+            <tr>
+
+                <td>@user.UserName</td>
+                <td>
+                    @user.Email
+                </td>
+                <td>
+                    @{
+                        var roles = await _UserManager.GetRolesAsync(user);
+                        if (roles.Count > 0)
+                        {
+                            @foreach (var role in roles)
+                            {
+                                <div>@role</div>
+                            }
+                        }
+                        else
+                        {
+                            <span>No Roles</span>
+                        }
+                    }
+                </td>
+            </tr>
+        }
+    </table>
+}

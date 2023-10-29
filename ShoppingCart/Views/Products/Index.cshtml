@@ -1,0 +1,58 @@
+﻿@model IEnumerable<Product>
+
+@{
+    ViewData["Title"] = "Products";
+}
+<div>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <div class="d-flex flex-column  align-items-center">
+                    <div class="bg-success mt-3 p-3 text-white w-25">
+                        <vc:small-cart/>
+                    </div>
+                    <div class="w-50">
+                        <vc:categories/>
+                    </div>
+
+                </div>
+            }
+            <hr class="text-white"/>
+        </div>
+<h1 class="mb-5 text-white fw-bold">Products</h1>
+
+<div class="row d-flex justify-content-center">
+    @foreach (var item in Model)
+    {
+        <div class="col-lg-3 col-sm-12 ">
+            <img src="/media/products/@item.Image" class="img-fluid" alt=""/>
+            <h4>@item.Name</h4>
+            <div>
+                @Html.Raw(item.Description)
+            </div>
+            <p>
+                @item.Price.ToString("C2")
+            </p>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <p>
+                    <a class="btn background-primary text-white" asp-controller="Cart" asp-action="Add" asp-route-id="@item.Id">Add to cart</a>
+
+                    <a class="btn background-secondary text-white" asp-controller="Products" asp-action="Details" asp-route-productId="@item.Id">Details..</a>
+                </p>
+            }
+        </div>
+    }
+
+
+    @if (ViewBag.TotalPages > 1)
+    {
+        <div class="d-flex w-100 justify-content-center">
+            <pagination page-count="@ViewBag.TotalPages"
+                        page-target="/products/@ViewBag.CategorySlug"
+                        page-number="@ViewBag.PageNumber"
+                        page-range="@ViewBag.PageRange">
+            </pagination>
+        </div>
+    }
+
+</div>

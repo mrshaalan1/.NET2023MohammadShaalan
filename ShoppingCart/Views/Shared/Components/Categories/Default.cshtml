@@ -1,0 +1,48 @@
+﻿@model IEnumerable<Category>
+<ul class="list-group row d-flex flex-row justify-content-center gap-2 mt-3">
+    <li class="list-group-item rounded border-0 m-0 col-3 d-flex justify-content-center align-items-center text-center">
+        <a class="nav-link text-primary fw-bold border-0 " asp-controller="Products" asp-action="Index" asp-route-categorySlug="">All Products</a>
+    </li>
+
+    @foreach (var item in Model)
+    {
+        <li class="list-group-item rounded border-0 m-0 col-3 d-flex justify-content-center align-items-center text-center">
+            <a class="nav-link border-0 text-primary fw-bold" asp-controller="Products" asp-action="Index" asp-route-categorySlug="@item.Slug">@item.Name</a>
+        </li>
+    }
+    
+    <li class="list-group-item rounded border-0 m-0 col-3 d-flex justify-content-center align-items-center text-center">
+            <a class="nav-link text-primary fw-bold border-0 " asp-controller="Products" asp-action="Index" asp-route-categorySlug="">Test Products</a>
+        </li>
+    
+</ul>
+<form asp-controller="Products" asp-action="Index" id="searchForm" class="d-flex flex-column align-items-center">
+    <div class="input-group mb-3 d-flex flex-column align-items-center mt-3">
+        <input type="text" class="form-control w-75" placeholder="Search..." name="search" value="@ViewBag.SearchTerm">
+        <div class="input-group-append mt-3">
+            <button class="btn btn-outline-secondary background-primary text-white border-0" type="submit">Search</button>
+        </div>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" name="orderByPrice" id="orderByPrice" value="true"
+               @if (ViewBag.OrderByPrice != null && ViewBag.OrderByPrice)
+               {
+                   <text>checked</text>
+               }>
+        <label class="form-check-label text-white" for="orderByPrice">
+            Lowest to Highest Price
+        </label>
+    </div>
+</form>
+<script>
+    document.getElementById("orderByPrice").addEventListener("change", function () {
+        document.getElementById("searchForm").submit();
+    });
+</script>
+
+<style>
+    #orderByPrice:checked {
+        background-color: #9990fa;
+                border-color: #9990fa;
+    }
+</style>

@@ -1,0 +1,19 @@
+﻿@model List<Review>
+
+<div>
+    @if (!Model.Any())
+    {
+        <div class="d-flex justify-content-center text-white fw-bold">No Reviews..</div>
+    }
+    else
+    {
+        @foreach (var review in Model)
+        {
+            <div class="row background-primary mt-1 border border-white p-1 text-white">
+                <h5 class="fw-bold">@review.AppUser.UserName</h5>
+                <h6>Review:</h6>
+                <p class="text-start">@review.body</p>
+            </div>
+        }
+    }
+</div>

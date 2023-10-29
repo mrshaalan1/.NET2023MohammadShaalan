@@ -1,0 +1,70 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>@ViewData["Title"] - ShoppingCart</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/ShoppingCart.styles.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/css/details.css" asp-append-version="true"/>
+
+
+</head>
+<body>
+<header>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm background-primary box-shadow mb-3 px-2">
+        <a class="navbar-brand text-white" asp-area="" asp-controller="Products" asp-action="Index">ShoppingCart</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-collapse collapse d-sm-inline-flex justify-content-end px-2">
+            @if (User.IsInRole("Admin"))
+            {
+                <a asp-area="Admin" asp-controller="Products" asp-action="Index" class="text-decoration-none text-black">Products</a>
+            }
+            else
+            {
+                <a asp-controller="Products" asp-action="Index" class="nav-link text-white">Products</a>
+                <a asp-controller="Order" asp-action="Index" class="nav-link text-white">Order</a>
+            }
+            @* </span> *@
+            @if (User.Identity?.IsAuthenticated ?? false)
+            {
+                <span class="nav-item">
+                    <a class="btn btn-danger ms-2" asp-controller="Account" asp-action="Logout">Log out</a>
+                </span>
+            }
+            else
+            {
+                <span class="nav-item ms-2">
+                    <a class="btn btn-success " asp-controller="Account" asp-action="Login">Log in</a>
+                </span>
+            }
+        </div>
+    </nav>
+</header>
+<div class="container">
+    <main role="main" class="pb-3">
+        <div class="row">
+
+            <div class="col">
+                <partial name="_NotificationPartial"/>
+                @RenderBody()
+            </div>
+        </div>
+    </main>
+</div>
+
+<footer class="border-top footer text-muted">
+    <div class="container">
+        &copy; 2023 - ShoppingCart
+    </div>
+</footer>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+@await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
