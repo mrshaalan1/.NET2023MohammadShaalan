@@ -1,0 +1,68 @@
+@model Order
+
+<div class="container-fluid row ">
+    <div class="col-lg-6 col-md-12 ">
+        <div class="col-8 form-control-lg">
+            <div class=" input-group-lg d-flex flex-column">
+                <label>FirstName</label>
+                <div placeholder="FirstName" class="input-field bg-white p-1 rounded">@Model.FirstName</div>
+            </div>
+
+            <div class="input-group-lg d-flex flex-column">
+                <label>LastName</label>
+                <div placeholder="FirstName" class="input-field bg-white p-1 rounded">@Model.LastName</div>
+
+            </div>
+
+            <div class=" input-group-lg d-flex flex-column">
+                <label>Address</label>
+                <div placeholder="FirstName" class="input-field bg-white p-1 rounded">@Model.ShippingAddress</div>
+
+            </div>
+
+            <label>Payment Method:</label>
+            <div class="form-control-lg bg-white">
+                <input disabled placeholder="Address" type="checkbox" checked value="delivery"/>
+                <label>Pay On Delivery</label>
+            </div>
+            <div class=" input-group-lg d-flex flex-column">
+                <label>Order Notes</label>
+                <pre disabled class="input-field bg-white p-1 rounded text-wrap" placeholder="Wrap as a gift..." >@Model.OrderNotes</pre>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6 col-md-12 p-3 bg-secondary bg-opacity-50">
+        <h2>Products</h2>
+        @foreach (var item in @Model.OrderItemsIds)
+        {
+            <div class="row border border-1 border-secondary rounded p-0 m-0 mb-1">
+                <div class="col-3 p-0">
+                    <img class="rounded" width="150" height="150" src="~/media/products/@item.Image" alt="Product"/>
+                </div>
+                <div class="col">
+                    <div class="row">
+                        <div class="col">
+                            <h4 class="fw-bolder">@item.ProductName</h4>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <span class="fw-bold text-white">Price:</span> <span>@item.Price</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <span class="fw-bold text-white">Qty</span> @item.Quantity
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <span class="fw-bold text-white">Total</span> @item.Total
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        }
+    </div>
+</div>

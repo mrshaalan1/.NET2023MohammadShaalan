@@ -1,0 +1,93 @@
+@model Product
+
+
+<div class="container">
+    <div class="card">
+        <div class="container-fluid">
+            <div class="wrapper row">
+                <div class="preview col-md-6">
+
+                    <div class="preview-pic tab-content">
+                        <div class="tab-pane active" id="pic-1">
+                            <img src="~/media/products/@Model.Image"/>
+                        </div>
+                        <div class="tab-pane" id="pic-2">
+                            <img src="~/media/products/@Model.Image"/>
+                        </div>
+                        <div class="tab-pane" id="pic-3">
+                            <img src="~/media/products/@Model.Image"/>
+                        </div>
+                        <div class="tab-pane" id="pic-4">
+                            <img src="~/media/products/@Model.Image"/>
+                        </div>
+                        <div class="tab-pane" id="pic-5">
+                            <img src="~/media/products/@Model.Image"/>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="details col-md-6">
+                    <h3 class="product-title">@Model.Name</h3>
+                    <div class="rating">
+                        <div class="stars">
+                            @for (int i = 0; i < Model.Rating; i++)
+                            {
+                                <span class="fa fa-star checked"></span>
+                            }
+                            @for (int i = 0; i < 5 - Model.Rating; i++)
+                            {
+                                <span class="fa fa-star"></span>
+                            }
+                            <span class="review-no">(@Model.RatingCount)</span>
+                        </div>
+                    </div>
+                    <pre class="product-description">@Html.Raw(@Model.Description)</pre>
+                    <h4 class="price">current price: $<span>@Model.Price</span></h4>
+                    <div class="action">
+                        <a asp-controller="Cart" asp-action="Add" asp-route-id="@Model.Id" class="add-to-cart btn btn-secondary" type="button">add to cart</a>
+                    </div>
+
+                    <form asp-controller="Products" asp-action="Rate" method="post">
+                        <div class="rating disappear">
+                            <input type="hidden" value="@Model.Id" asp-for="Id"/>
+                            <input type="radio" name="rating" value="5" id="5" asp-for="Rating"><label for="5">☆</label>
+                            <input type="radio" name="rating" value="4" id="4" asp-for="Rating"><label for="4">☆</label>
+                            <input type="radio" name="rating" value="3" id="3" asp-for="Rating"><label for="3">☆</label>
+                            <input type="radio" name="rating" value="2" id="2" asp-for="Rating"><label for="2">☆</label>
+                            <input type="radio" name="rating" value="1" id="1" asp-for="Rating"><label for="1">☆</label>
+                        </div>
+                        <button id="rate" class="btn background-primary" type="submit">Rate</button>
+                    </form>
+
+                    <div class="mt-3">
+                        <a class="text-primary" asp-action="Index">Back to Products</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <form asp-controller="Products" asp-action="Review" method="post" class="d-flex flex-column">
+        <label>Leave a review</label>
+        <input type="hidden" value="@Model.Id" asp-for="Id" class="input-group-lg form-control-lg"/>
+        <textarea asp-for="body" placeholder="review..."></textarea>
+
+        <div>
+            <button type="submit" class="btn background-primary">submit</button>
+        </div>
+    </form>
+    <div class="mt-3">
+        <a class="text-primary" asp-action="readReviews" asp-route-id="@Model.Id">See Product Reviews...</a>
+    </div>
+</div>
+
+
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
+<link href="~/css/details.css" rel="stylesheet"/>
+<script>
+let button = document.getElementById("rate");
+button.addEventListener("click", () => {
+    document.getElementsByClassName("disappear")[0].style.display = "none";
+    button.style.display = "none";
+})
+</script>

@@ -1,0 +1,14 @@
+﻿@model List<Review>
+
+<div>
+    @foreach (var review in Model)
+    {
+    
+        <div class="row background-primary mt-1 border border-white p-1">
+            <h5 class="fw-bold">@review.AppUser.UserName</h5>
+            <h6>Review:</h6>
+            <p class="text-start">@review.body</p>
+        </div>
+        
+    }
+</div>

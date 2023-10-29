@@ -1,0 +1,42 @@
+﻿@model IEnumerable<Category>
+<ul class="list-group col">
+    <li class="list-group-item">
+        <a class="nav-link text-dark" asp-controller="Products" asp-action="Index" asp-route-categorySlug="">All Products</a>
+    </li>
+
+    @foreach (var item in Model)
+    {
+        <li class="list-group-item">
+            <a class="nav-link text-dark" asp-controller="Products" asp-action="Index" asp-route-categorySlug="@item.Slug">@item.Name</a>
+        </li>
+    }
+    @* <form asp-controller="Products" asp-action="Index"> *@
+    @*     <input type="search" class="list-group-item" placeholder="Search..."/> *@
+    @* </form> *@
+
+    <form asp-controller="Products" asp-action="Index" id="searchForm">
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Search..." name="search" value="@ViewBag.SearchTerm">
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary background-primary text-black" type="submit">Search</button>
+            </div>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="orderByPrice" id="orderByPrice" value="true"
+                   @if (ViewBag.OrderByPrice != null && ViewBag.OrderByPrice)
+                   {
+                       <text>checked</text>
+                   }>
+            <label class="form-check-label" for="orderByPrice">
+                Lowest to Highest Price
+            </label>
+        </div>
+    </form>
+
+
+</ul>
+<script>
+    document.getElementById("orderByPrice").addEventListener("change", function () {
+        document.getElementById("searchForm").submit();
+    });
+</script>
