@@ -1,11 +1,5 @@
-# ShoppingCart | .NET 7
-
-## Before running:
-
-1. dotnet restore
-> to install packages
-3. dotnet build
-> to check that there is no errors
-
-## To run:
-- dotnet build
+Made Using dotnet 7
+1- open ShoppingCart.sln
+2- Rebuild Solution
+3- Run the solution
+4- webpage hosted at localhost:3000
